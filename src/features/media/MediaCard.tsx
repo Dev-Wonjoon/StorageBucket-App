@@ -85,6 +85,15 @@ const MediaCard: React.FC<MediaCardProps> = ({ item, helpers }) => {
                                 {getPlatformName(item.platform_id)}
                             </span>
                         )}
+
+                        {item.tags && item.tags.map(tag => (
+                            <span 
+                                key={tag.id} 
+                                className="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-800 dark:text-purple-100"
+                            >
+                                {tag.name}
+                            </span>
+                        ))}
                     </div>
                 </div>
             </div>
@@ -92,4 +101,4 @@ const MediaCard: React.FC<MediaCardProps> = ({ item, helpers }) => {
     );
 };
 
-export default MediaCard; 
+export default MediaCard;

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import type { Media } from "../../api/types";
 
 
@@ -8,25 +8,27 @@ export function useMediaDetail(mediaId: number) {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
+  const fetchMedia = useCallback(async () => {
     setLoading(true);
-    fetch(`${API_URL}/api/media/${mediaId}`)
-      .then(async res => {
-        if (!res.ok) {
-          const err = await res.json().catch(() => ({}));
-          throw new Error((err.detail as string) || `Error ${res.status}`);
-        }
-        return res.json() as Promise<Media>;
-      })
-      .then(json => {
-        setData(json);
-        setLoading(false);
-      })
-      .catch(err => {
-        setError(err.message);
-        setLoading(false);
-      });
+    setError(null);
+    try {
+      const res = await fetch(`${API_URL}/api/media/${mediaId}`);
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error((err.detail as string) || `Error ${res.status}`);
+      }
+      const json = await res.json() as Media;
+      setData(json);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   }, [mediaId]);
 
-  return { data, loading, error };
+  useEffect(() => {
+    fetchMedia();
+  }, [fetchMedia]);
+
+  return { data, loading, error, refreshMediaDetail: fetchMedia }; // Add refreshMediaDetail
 }
