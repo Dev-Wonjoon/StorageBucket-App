@@ -1,17 +1,21 @@
+// src/features/media/MediaGrid.tsx
 import React from "react";
 import type { Media } from '../../api/types';
-import { useMediaGrid } from "./useMediaGrid";
+import { useMediaGrid } from "./hooks/useMediaGrid"; // 경로 조정
 import MediaCard from "./MediaCard";
-import { Link } from "react-router-dom";
 
 interface MediaGridProps {
     items: Media[];
     className?: string;
+    selectedMediaIds: Set<number>; // 추가: 선택된 미디어 ID 집합
+    onSelectMedia: (mediaId: number, isSelected: boolean) => void; // 추가: 미디어 선택/해제 핸들러
 }
 
 const MediaGrid: React.FC<MediaGridProps> = ({
     items,
     className = '',
+    selectedMediaIds,
+    onSelectMedia,
 }) => {
     const helpers = useMediaGrid();
 
@@ -30,13 +34,13 @@ const MediaGrid: React.FC<MediaGridProps> = ({
         ].join(' ')}
         >
             {items.map((item) => (
-                <Link key={item.id} to={`/media/${item.id}`} className="block">
-                    <MediaCard
+                <MediaCard
                     key={item.id}
                     item={item}
                     helpers={helpers}
-                    />
-                </Link>
+                    isSelected={selectedMediaIds.has(item.id)} // 선택 상태 전달
+                    onSelect={onSelectMedia} // 선택 핸들러 전달
+                />
             ))}
         </div>
     );

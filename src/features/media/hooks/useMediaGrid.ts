@@ -1,6 +1,6 @@
 import { useState } from "react";
-import type { Media } from '../../api/types';
-import { usePlatform } from "../platform/usePlatform";
+import type { Media } from '../../../api/types';
+import { usePlatform } from "../../platform/usePlatform";
 
 
 const API_BASE_URL = import.meta.env.VITE_APP_API_BASE_URL;

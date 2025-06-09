@@ -1,3 +1,4 @@
+// src/features/tags/useTags.ts
 import { useState, useEffect, useCallback } from "react";
 import { getAllTags } from "../../api/client";
 import type { Tag } from "../../api/types";
@@ -13,7 +14,7 @@ export function useTags() {
         try {
             const data = await getAllTags();
             if(Array.isArray(data)) {
-                setTags(data);
+                setTags(data as Tag[]); // Type assertion
             } else {
                 setTags([]);
                 setError("Invalid data format");

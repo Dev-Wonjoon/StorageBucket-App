@@ -1,29 +1,32 @@
+// src/shared/components/TagSelect.tsx
 import React from 'react';
 import type { Tag } from '../../api/types';
 
-interface TagSelectProps {
-    tags: Tag[];
+export interface Option<V> {
+    value: V;
+    label: string;
+}
+
+export interface TagSelectProps { // Renamed from DropdownProps
+    tags: Tag[]; // Changed to tags for clarity
     selectedTagIds: number[];
-    // 여기를 수정합니다: Number[] -> number[]
-    onChange: (tagIds: number[]) => void; 
+    onChange: (tagIds: number[]) => void; // Corrected to number[]
     loading?: boolean;
     error?: string | null;
     placeholder?: string;
     className?: string;
 }
 
-const TagSelect: React.FC<TagSelectProps> = ({
+export function TagSelect({ // Renamed from Dropdown
     tags,
     selectedTagIds,
     onChange,
     loading = false,
     error = null,
-    placeholder = '모든 태그',
+    placeholder = '태그 선택',
     className = '',
-}) => {
+}: TagSelectProps) { // Used TagSelectProps
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        // Number() 생성자가 아닌, Number 전역 함수를 사용하면 primitive number를 반환합니다.
-        // 하지만 타입 선언이 잘못되었기 때문에 오류가 발생한 것입니다.
         const value = Array.from(e.target.selectedOptions, option => Number(option.value));
         onChange(value);
     };
@@ -45,24 +48,24 @@ const TagSelect: React.FC<TagSelectProps> = ({
     }
 
     return (
-        <select
-            multiple
-            value={selectedTagIds.map(String)} 
-            onChange={handleChange}
-            className={[
-                'border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400',
-                'dark:bg-gray-800 dark:border-gray-600 dark:text-gray-100',
-                className
-            ].join(' ')}
-        >
-            <option value="">{placeholder}</option>
-            {tags.map(tag => (
-                <option key={tag.id} value={tag.id}>
-                    {tag.name}
-                </option>
-            ))}
-        </select>
-    );
-};
+    <select
+      multiple // Allow multiple selections
+      value={selectedTagIds.map(String)} // Convert numbers to strings for select value
+      onChange={handleChange}
+      className={[
+        'border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400',
+        'dark:bg-gray-800 dark:border-gray-600 dark:text-gray-100',
+        className
+      ].join(' ')}
+    >
+      <option value="">{placeholder}</option>
+      {tags.map(tag => (
+        <option key={tag.id} value={tag.id}>
+          {tag.name}
+        </option>
+      ))}
+    </select>
+  );
+}
 
 export default TagSelect;

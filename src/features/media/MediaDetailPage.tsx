@@ -1,7 +1,6 @@
-import React from 'react'; // React import 추가
 import { useParams, Navigate } from "react-router-dom";
-import { useMediaDetail } from "./useMediaDetail";
-import { useMediaGrid } from "./useMediaGrid";
+import { useMediaDetail } from "./hooks/useMediaDetail";
+import { useMediaGrid } from "./hooks/useMediaGrid";
 import { useTags } from "../tags/useTags";
 
 // 새로 만든 컴포넌트들을 임포트합니다.

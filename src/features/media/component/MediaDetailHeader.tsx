@@ -1,6 +1,6 @@
 import React from "react";
 import type { Media } from "../../../api/types";
-import type { UseMediaGridReturn } from "../useMediaGrid";
+import type { UseMediaGridReturn } from "../hooks/useMediaGrid";
 
 
 interface MediaDetailHeaderProps {

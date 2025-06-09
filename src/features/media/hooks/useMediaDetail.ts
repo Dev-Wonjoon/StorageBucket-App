@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import type { Media } from "../../api/types";
+import type { Media } from "../../../api/types";
 
 
 const API_URL = import.meta.env.VITE_APP_API_BASE_URL;

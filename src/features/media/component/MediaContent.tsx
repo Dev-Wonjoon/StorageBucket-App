@@ -1,7 +1,7 @@
 // src/features/media/components/MediaContentDisplay.tsx
 import React from 'react';
 import type { Media } from '../../../api/types'; // types.ts 경로에 따라 조정
-import type { UseMediaGridReturn } from '../useMediaGrid'; // useMediaGrid 경로에 따라 조정
+import type { UseMediaGridReturn } from '../hooks/useMediaGrid'; // useMediaGrid 경로에 따라 조정
 import VideoPlayer from '../../../shared/components/VideoPlayer'; // VideoPlayer 경로에 따라 조정
 
 interface MediaContentDisplayProps {

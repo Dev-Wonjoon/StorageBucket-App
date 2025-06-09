@@ -1,7 +1,7 @@
 // src/features/media/MediaCard.tsx
 import React from "react";
-import type { Media } from '../../api/types';
-import type { UseMediaGridReturn } from "./hooks/useMediaGrid"; // 경로 조정
+import type { Media } from '../../../api/types'; //
+import type { UseMediaGridReturn } from "../hooks/useMediaGrid"; // 경로 조정
 import { useNavigate } from 'react-router-dom'; // useNavigate 추가
 
 interface MediaCardProps {
@@ -13,12 +13,13 @@ interface MediaCardProps {
 
 const MediaCard: React.FC<MediaCardProps> = ({ item, helpers, isSelected, onSelect }) => {
     const navigate = useNavigate();
+
     const { 
         imgErrors, 
         handleImageError, 
         getPlatformName, 
         getThumbnailUrl,
-    } = helpers;
+    } = helpers; //
 
     const handleDownload = (e: React.MouseEvent) => {
         e.stopPropagation(); // 이벤트 버블링 중단
@@ -33,7 +34,7 @@ const MediaCard: React.FC<MediaCardProps> = ({ item, helpers, isSelected, onSele
     };
 
     const handleCardClick = (e: React.MouseEvent) => {
-        // Shift 키를 누른 채 클릭하면 선택/해제 (Google 포토 방식)
+        // Shift 키를 누른 채 클릭하면 선택/해제
         if (e.shiftKey) {
             e.preventDefault(); // 기본 링크 이동 방지
             onSelect(item.id, !isSelected);
@@ -47,13 +48,14 @@ const MediaCard: React.FC<MediaCardProps> = ({ item, helpers, isSelected, onSele
         <div
             className={`bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md transition-shadow duration-300 flex flex-col relative
                         ${isSelected ? 'ring-4 ring-blue-500' : 'hover:shadow-lg'}`}
-            onClick={handleCardClick}
+            onClick={handleCardClick} // 카드 클릭 이벤트 처리
         >
+            {/* 선택 체크박스 (우측 상단) */}
             <input
                 type="checkbox"
                 checked={isSelected}
                 onChange={(e) => {
-                    e.stopPropagation();
+                    e.stopPropagation(); // 체크박스 클릭이 카드 클릭으로 전파되지 않도록 방지
                     onSelect(item.id, e.target.checked);
                 }}
                 className="absolute top-2 right-2 z-10 w-5 h-5 cursor-pointer accent-blue-500"
@@ -78,7 +80,8 @@ const MediaCard: React.FC<MediaCardProps> = ({ item, helpers, isSelected, onSele
                         </div>
                     </div>
                 )}
-                {!isSelected && (
+                {/* 오버레이 버튼은 선택 모드일 때는 비활성화되거나 숨겨지는 것이 좋습니다. */}
+                {!isSelected && ( // 선택 모드일 때만 보이도록 변경
                     <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-opacity duration-200 flex items-center justify-center opacity-0 group-hover:opacity-100">
                         <div className="flex space-x-2">
                             <button

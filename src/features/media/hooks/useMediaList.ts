@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
-import { getMediaList } from '../../api/client';
-import type { Media } from '../../api/types';
+import { getMediaList } from '../../../api/client';
+import type { Media } from '../../../api/types';
 
 export function useMediaList(limit = 30) {
     const [items, setItems] = useState<Media[]>([]);
